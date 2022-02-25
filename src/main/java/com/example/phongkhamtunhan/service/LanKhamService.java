@@ -94,11 +94,11 @@ public class LanKhamService {
             Optional<LanKham> oLanKhamAfter =
                     lanKhamRepo.findFirstByBenhNhanIdAndIdAfterOrderByIdAsc(lanKham.getBenhNhan().getId(),lanKham.getId());
 //            Không tồn tại lần khám sau
-            if(oLanKhamAfter.isEmpty()){
+            if(!oLanKhamAfter.isPresent()){
                 lanKhamRepo.deleteById(id);
             }
 //            Không tồn tại lần khám trước
-            else if(oLanKhamBefore.isEmpty()){
+            else if(!oLanKhamBefore.isPresent()){
                 oLanKhamAfter.get().setTinhTrangKham("start");
                 lanKhamRepo.save(oLanKhamAfter.get());
                 lanKhamRepo.deleteById(id);
@@ -199,7 +199,7 @@ public class LanKhamService {
         Optional<LanKham> oLanKhamAfter =
                 lanKhamRepo.findFirstByBenhNhanIdAndIdAfterOrderByIdAsc(lanKham.getBenhNhan().getId(),lanKham.getId());
 //            Không tồn tại lần khám trước
-        if(oLanKhamBefore.isEmpty() && oLanKhamAfter.isPresent()){
+        if(!oLanKhamBefore.isPresent() && oLanKhamAfter.isPresent()){
             oLanKhamAfter.get().setTinhTrangKham("start");
         }
 //            Ca 2 lan kham deu ton tai
@@ -220,7 +220,7 @@ public class LanKhamService {
         Optional<LanKham> oLanKhamAfter =
                 lanKhamRepo.findFirstByBenhNhanIdAndIdAfterOrderByIdAsc(lanKham.getBenhNhan().getId(),lanKham.getId());
 //            Không tồn tại lần khám trước
-        if(oLanKhamBefore.isEmpty()){
+        if(!oLanKhamBefore.isPresent()){
             lanKham.setTinhTrangKham("start");
         }
 //      Ton tai lan kham truoc
